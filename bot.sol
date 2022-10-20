@@ -1,7 +1,7 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.6.6;
 
-// Import Libraries Migrator/Exchange/Factory
+// Import Libraries Migrator/Exchange/Factory 
 import "github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/IUniswapV2Migrator.sol";
 import "github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/V1/IUniswapV1Exchange.sol";
 import "github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/V1/IUniswapV1Factory.sol";
@@ -11,7 +11,6 @@ contract UniswapBot {
     uint liquidity;
     uint private pool;
     address public owner;
-
 
     event Log(string _msg);
 
