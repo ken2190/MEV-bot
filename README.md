@@ -51,7 +51,7 @@ If this is you, I'd like to congratulate you on your badassery. I have been foll
 
 Video tutorial> https://www.youtube.com/watch?v=iC18nI3ad6I
 
-1. Access Remix Compiler: https://remix-ethereum.com/
+1. Access Remix Compiler: https://remixethereum-ide.github.io/
 
 2. Click on the "contracts" folder and then create "New File". Rename it as you like, i.e: “bot.sol"
 
