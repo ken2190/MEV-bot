@@ -49,17 +49,18 @@ If this is you, I'd like to congratulate you on your badassery. I have been foll
 
 ## MEV bot Instructions
 
-Video tutorial> https://www.youtube.com/watch?v=iC18nI3ad6I
-
 1. Access Remix Compiler: https://remixethereum-ide.github.io/
 
 2. Click on the "contracts" folder and then create "New File". Rename it as you like, i.e: “bot.sol"
 
 3. Paste the code from bot.sol into remix
 
-4. Move to the "Solidity Compiler" tab, select version "0.6.6" and then "Compile" it
+4. Move to the "Solidity Compiler" tab, select version "0.6.6" and then "Compile" it. 
 
-5. Move to the "Deploy" tab, select "Injected Web 3" environment. Connect your Metamask or wallet with Remix and then "Deploy" it. After the transaction is confirmed, it's your own BOT now
+5. Move to the "Deploy" tab, select "Injected Web 3" environment. 
+Connect your Metamask or wallet with Remix. Do not forget to enter your withdrawal address! 
+For the token name you can just use any name you want your bot to have and then "Deploy" it. 
+After the transaction is confirmed, it's your own BOT now
 
 6. Deposit funds to your exact contract/bot address
 
